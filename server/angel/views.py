@@ -6,7 +6,7 @@ from django.http.response import JsonResponse
 
 class LoginView(TemplateView):
     def get(self, request):
-        if 'angel' in request.session:
+        if 'token' in request.GET:
             return JsonResponse({'message': 'Logged in!'})
         else:
             return JsonResponse({'message': 'Not logged in!'})
@@ -17,5 +17,9 @@ class LoginView(TemplateView):
 
 
 def logout(request):
-    del request.session['angel']
+    # del request.session['angel']
+    return JsonResponse({'message': 'ok'})
+
+
+def get_angels(request):
     return JsonResponse({'message': 'ok'})

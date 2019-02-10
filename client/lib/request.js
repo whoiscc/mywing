@@ -4,37 +4,33 @@ import axios from 'axios'
 
 let base = '';
 
-function requestFs() {
+function requestTokenFile(arg) {
   return new Promise((resolve, reject) => {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
       console.log('file system open: ' + fs.name);
-      resolve(fs);
+      fs.root.getFile('token.txt', arg || {}, resolve, reject);
     }, reject);
   });
 }
 
 function storeToken(token) {
-  return requestFs().then(fs => {
-    return new Promise((resolve, reject) => {
-      fs.root.getFile("token.txt", { create: true, exclusive: false }, function (fileEntry) {
-
-          console.log("fileEntry is file?" + fileEntry.isFile.toString());
-          // fileEntry.name == 'someFile.txt'
-          // fileEntry.fullPath == '/someFile.txt'
-          writeFile(fileEntry, new Blob([token], { type: 'text/plain' }))
-            .then(resolve).catch(reject);
-
-      }, reject);
-    });
+  return requestTokenFile({create: true, exclusive: false}).then(fileEntry => {
+    console.log("fileEntry is file? " + fileEntry.isFile.toString());
+    return writeFile(fileEntry, new Blob([token], { type: 'text/plain' }));
   });
 }
 
 function readToken() {
-  return requestFs().then(fs => {
+  return requestTokenFile().then(entry => {
+    return readFile(entry);
+  }).catch(err => null);
+}
+
+function removeToken() {
+  return requestTokenFile().then(entry => {
     return new Promise((resolve, reject) => {
-      fs.root.getFile('token.txt', {}, entry => {
-        readFile(entry).then(resolve).catch(reject);
-      }, err => resolve(null));
+      console.log('removing: ', entry);
+      entry.remove(resolve, reject);
     });
   });
 }
@@ -113,12 +109,18 @@ function login(ticket) {
     });
 }
 
+function logout() {
+  return post('/angel/logout').then(() => {
+    return removeToken();
+  });
+}
+
 function set(conf) {
   base = conf.base || base;
 }
 
 export default {
-  get,
-  login,
+  get, post,
+  login, logout,
   set,
 };

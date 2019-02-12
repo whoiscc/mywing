@@ -5,7 +5,7 @@ const webpack = require('webpack')
 
 module.exports = {
   outputDir: path.resolve(__dirname, './www'),
-  baseUrl: './',
+  publicPath: './',
   configureWebpack: {
     watchOptions: {
       ignored: /platforms|node_modules|package\.json/,

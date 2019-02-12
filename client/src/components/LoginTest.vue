@@ -3,7 +3,7 @@
     <button type="button" @click="onLogin">Login</button>
     <button type="button" @click="onLogout">Logout</button>
     <button type="button" @click="onRequest">Test Request</button>
-    <div>{{ angel || 'Make a request to see something.' }}</div>
+    <div>{{ message || 'Push a button to see something.' }}</div>
     <div v-if="error" style="color: red">{{ error }}</div>
   </div>
 </template>
@@ -14,25 +14,30 @@ import request from '../../lib/request'
 export default {
   data() {
     return {
-      angel: null,
+      message: null,
       error: null,
     }
   },
   methods: {
     onLogin() {
-      request.login('debug-ticket-create-angel').then(() => {
-        console.log('login finished')
+      request.login('debug-ticket-create-angel', true).then(() => {
+        this.message = 'Login finished'
+        this.error = null
+      }).catch(err => {
+        this.error = err
       })
     },
     onLogout() {
       request.logout().then(() => {
-        this.angel = null
-        console.log('logout finished')
+        this.message = 'Logout finished'
+        this.error = null
+      }).catch(err => {
+        this.error = err
       })
     },
     onRequest() {
       request.get('/angel').then(angel => {
-        this.angel = angel
+        this.message = angel
         this.error = null
       }).catch(err => {
         this.error = err

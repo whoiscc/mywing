@@ -71,10 +71,36 @@ function readFile(fileEntry) {
   });
 }
 
-class NotLoggedInError extends Error {
+class NetworkError extends Error {
+  constructor(status) {
+    super('network error: ' + status);
+  }
+}
+
+class InternalError extends Error {
+  constructor(message) {
+    super('internal error: ' + message);
+  }
+}
+
+class NotLoggedInError extends InternalError {
   constructor() {
     super('not logged in');
   }
+}
+
+function processResponse(resp) {
+  if (resp.status != 200) {
+    throw new NetworkError(resp.status);
+  }
+  if (resp.data.status != 0) {
+    if (resp.data.status == 2) {
+      throw new NotLoggedInError();
+    } else {
+      throw new InternalError(resp.data.message);
+    }
+  }
+  return resp.data.data;
 }
 
 function get(url, payload) {
@@ -83,7 +109,9 @@ function get(url, payload) {
     if (!token) {
       throw new NotLoggedInError();
     }
-    return axios.get(base + url + packGetPayload({...payload, token}));
+    return axios
+      .get(base + url + packGetPayload({...payload, token}))
+      .then(processResponse);
   })
 }
 
@@ -93,7 +121,9 @@ function post(url, payload) {
     if (!token) {
       throw new NotLoggedInError();
     }
-    return axios.post(base + url, {...payload, token});
+    return axios
+      .post(base + url, {...payload, token})
+      .then(processResponse);
   })
 }
 
@@ -101,10 +131,11 @@ function packGetPayload(payload) {
   return '?data=' + JSON.stringify(payload);
 }
 
-function login(ticket) {
-  return axios.post(base + '/angel/login', {ticket})
-    .then(resp => {
-      const token = resp.data.token;
+function login(ticket, debug = false) {
+  return axios.post(base + '/angel/login' + (debug ? '~debug' : ''), {ticket})
+    .then(processResponse)
+    .then(data => {
+      const token = data.token;
       return storeToken(token);
     });
 }

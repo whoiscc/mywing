@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
+
+    'angel',
 ]
 
 MIDDLEWARE = [
+    'common.middleware.extract_arguments_middleware',
+    'angel.middleware.login_checker_middleware',
+
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',

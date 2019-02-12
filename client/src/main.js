@@ -5,7 +5,7 @@ Vue.config.productionTip = false
 
 import request from '../lib/request'
 request.set({
-  base: 'http://10.0.0.113:8000'
+  base: 'http://10.142.154.110:8000'
 });
 
 

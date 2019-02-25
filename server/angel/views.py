@@ -3,7 +3,7 @@
 from django.views.generic import TemplateView
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
-from common import ok, error
+from common import ok, error, get_objects_with_id_list
 
 import datetime
 import time
@@ -14,6 +14,7 @@ from .models import Angel, LoginItem
 class LoginView(TemplateView):
     def get(self, request):
         back = request.args['back']
+        # TODO: decide redirect URL base on request.args['region']
         return ok({'url': 'https://google.com'})
 
     def post(self, request):
@@ -78,4 +79,4 @@ def logout(request):
 
 @require_GET
 def get_angels(request):
-    return ok(request.angel.to_dict())
+    return get_objects_with_id_list(Angel, request)

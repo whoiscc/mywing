@@ -50,6 +50,7 @@ $ cd client
 $ npm install
 $ npm run build -- --watch
 # 再打开一个终端
+$ cordova platform add browser
 $ cordova run browser --port=8080 -- --live-reload
 ```
 

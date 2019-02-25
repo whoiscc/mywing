@@ -17,7 +17,6 @@ def extract_arguments_middleware(get_response):
             args = json.loads(request.body)
 
         request.args = args
-        print(request.args)
         return get_response(request)
 
     return middleware

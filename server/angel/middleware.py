@@ -15,7 +15,7 @@ def login_checker_middleware(get_response):
     def middleware(request):
         if request.method not in ['GET', 'POST']:
             return get_response(request)
-        
+
         if request.path in excluded_path_list:
             return get_response(request)
 

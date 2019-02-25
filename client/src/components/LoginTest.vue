@@ -16,13 +16,16 @@ export default {
     return {
       message: null,
       error: null,
+      angel: null,
     }
   },
   methods: {
     onLogin() {
-      request.login('debug-ticket-create-angel', true).then(() => {
+      request.login('debug-ticket-create-angel', true).then(angel => {
         this.message = 'Login finished'
         this.error = null
+        this.angel = angel
+        console.log('current angel: ' + angel)
       }).catch(err => {
         this.error = err
       })
@@ -31,13 +34,16 @@ export default {
       request.logout().then(() => {
         this.message = 'Logout finished'
         this.error = null
+        this.angel = null
       }).catch(err => {
         this.error = err
       })
     },
     onRequest() {
-      request.get('/angel').then(angel => {
-        this.message = angel
+      request.get('/angel', {
+        id_list: [this.angel ? this.angel.id : 42]
+      }).then(angels => {
+        this.message = angels
         this.error = null
       }).catch(err => {
         this.error = err

@@ -132,12 +132,15 @@ function packGetPayload(payload) {
 }
 
 function login(ticket, debug = false) {
+  let angel = null;
   return axios.post(base + '/angel/login' + (debug ? '~debug' : ''), {ticket})
     .then(processResponse)
     .then(data => {
       const token = data.token;
+      angel = data.angel;
       return storeToken(token);
-    });
+    })
+    .then(() => angel);
 }
 
 function logout() {

@@ -153,3 +153,27 @@
 * `inProgress`是否只包含正在进行中（没有被确认完成或取消）的任务（布尔值）
 
 返回一个列表，其中每一项与`GET /task`字段相同。
+
+## 公共信息模块
+
+`GET /info/board/<board_id>`
+
+获取排行榜数据。`<board_id>`为排行榜ID，另作规定。
+
+返回字段：
+* `angels` 上榜用户列表。列表中的每一项为一个用户，拥有`id`、`nickname`和`value`字段。`id`和`nickname`含义同上，`value`为排行榜相关的数据。
+* `updateAt` 排行榜更新时间（UNIX时间戳）
+
+`GET /info/news`
+
+`GET /info/news/<news_id>`
+
+获取所有新闻列表和某一条新闻的详细信息。一条新闻包含以下字段：
+
+* `id`
+* `title`
+* `author`
+* `updatedAt`
+* `content`
+
+获取新闻列表的接口返回一列新闻，列表的每一项只包含前四个字段。

@@ -14,6 +14,7 @@
 * `id`用户ID
 * `nickname`用户昵称
 * `distribution`用户捐赠总额（浮点数）
+* `imToken`用于即时通讯的token
 
 ----
 
@@ -151,10 +152,13 @@
 获取当前用户参与过的所有任务，请求参数
 
 * `inProgress`是否只包含正在进行中（没有被确认完成或取消）的任务（布尔值）
+* `token`
 
 返回一个列表，其中每一项与`GET /task`字段相同。
 
 ## 公共信息模块
+
+> 以下所有接口均需要`token`参数
 
 `GET /info/board/<board_id>`
 
@@ -177,3 +181,5 @@
 * `content`
 
 获取新闻列表的接口返回一列新闻，列表的每一项只包含前四个字段。
+
+（另外，`GET /info/board`和`GET /info/news`也可以以类似于`GET /angel`的方式，使用`id_list`参数进行调用。）

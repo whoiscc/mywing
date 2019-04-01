@@ -1,11 +1,10 @@
 #
 
 from django.views.generic import TemplateView
-from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
+from django.utils import timezone
 from common import ok, error, get_objects_with_id_list
 
-import datetime
 import time
 
 from .models import Angel, LoginItem

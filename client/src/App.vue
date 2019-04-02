@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <LoginTest/>
+    <DebugMain/>
   </div>
 </template>
 
 <script>
-import LoginTest from './components/LoginTest'
+import DebugMain from './components/test/Main'
 
 export default {
   name: 'app',
   components: {
-    LoginTest
+    DebugMain
   },
 }
 </script>
@@ -22,6 +21,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  text-align: center;
+  /* text-align: center; */
 }
 </style>

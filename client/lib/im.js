@@ -1,20 +1,26 @@
 //
 
+import IMService from './im-internal/im';
 
-let im = null;
-function start(angel, onReceive) {
-  if (im !== null) {
-    throw new Error('you should stop old im instance before starting a new one');
+class Im {
+  constructor(angel, onReceive) {
+    this.token = angel.imToken;
+    this.id = angel.id;
+    this.onReceive = onReceive;
+    this.active = false;
+    this.localId = 0;
+    this.im = null;
   }
 
-  return new Promise((resolve, reject) => {
+  start() {
+    const this_ = this;
     const observer = {
       handlePeerMessage: function (msg) {
         console.log(
           "msg sender:", msg.sender, " receiver:", msg.receiver,
           " content:", msg.content, " timestamp:", msg.timestamp
         );
-        onReceive(msg);
+        this_.onReceive({id: msg.sender, message: msg.content});
       },
       handleMessageACK: function(msgLocalID, receiver) {
         console.log("message ack local id:", msgLocalID, " receiver:", receiver)
@@ -25,12 +31,10 @@ function start(angel, onReceive) {
       onConnectState: function(state) {
         if (state == IMService.STATE_CONNECTED) {
          console.log("im connected");
-         resolve();
         } else if (state == IMService.STATE_CONNECTING) {
          console.log("im connecting");
         } else if (state == IMService.STATE_CONNECTFAIL) {
          console.log("im connect fail");
-         reject();
         } else if (state == IMService.STATE_UNCONNECTED) {
          console.log("im unconnected");
         }
@@ -40,25 +44,32 @@ function start(angel, onReceive) {
       }
     };
 
-    im = new IMService(observer);
-    im.accessToken = angel.imToken;
-    im.start();
-  });
+    this.im = new IMService();
+    this.im.observer = observer;
+    this.im.accessToken = this.token;
+    this.im.start();
+
+    this.active = true;
+  }
+
+  stop() {
+    this.im.stop();
+    this.active = false;
+  }
+
+  send(message, receiver) {
+    if (!this.active) {
+      throw new Error('Im instance is not active');
+    }
+    const msg = {
+      sender: this.id,
+      receiver: receiver.id,
+      content: message,
+      msgLocalID: this.localId,
+    };
+    this.localId += 1;
+    this.im.sendPeerMessage(msg);
+  }
 }
 
-
-let localId = 0;
-function send(angel, receiver, content) {
-  msg = {sender: angel.imId, receiver: receiver.imId, content, msgLocalID: localId};
-  localId += 1;
-  im.sendPeerMessage(msg);
-}
-
-function stop() {
-  im.stop();
-  im = null;
-}
-
-export default {
-  start, send, stop
-};
+export default Im;

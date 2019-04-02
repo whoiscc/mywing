@@ -45,7 +45,7 @@ request.set({
 配置表中的`base`设置为后端服务器运行的`${IP}`。
 
 ```
-$ npm install --global cordova
+$ npm install --global cordova@8.1.2
 $ cd client
 $ npm install
 $ npm run build -- --watch

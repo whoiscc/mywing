@@ -5,6 +5,7 @@ import time
 import sys
 import os
 
+from django.views.decorators.http import require_GET, require_POST
 from common import ok,error,extract,get_object,get_objects_with_id_list
 from .models import Task
 from random import sample
@@ -28,17 +29,21 @@ def create(request):
 	task.save()	
 	return ok(task.to_dict())
 
+
 @require_POST
 def accept(request):
 	change_task_status(request,1,'helper')
+
 
 @require_POST
 def finish(request):
 	change_task_status(request,2,'helper')
 
+
 @require_POST
 def confirm(request):
 	change_task_status(request,3,'owner')	
+
 
 @require_POST
 def cancel(request):
@@ -50,9 +55,12 @@ def cancel(request):
 	next_status=cancel_status_dict(request.args[id].get_object.status)
 	change_task_status(request,next_status,'owner')
 
+
 @require_GET
 def get_task_available(request):
-	task_list=Task.objects.all()[:int(request.args[max])]
+	list_num=int(request.args[max])
+	task_list=Task.objects.get()
+	return ok([task.to_dict() for task in task_list])
 	
 
 @require_GET
@@ -64,11 +72,13 @@ def get_self_task(request):
 		if task.owner==angel_id or task.helper==angel_id:
 			if request.args[inProgress]!=false or task.status==0 or task.status==1 or task.status==2:
 				involve_task.append(task)
-	return [task.to_dict() for task in involve_task]
+	return ok([task.to_dict() for task in involve_task])
  
+
 @require_GET
 def get_task(request):
 	return get_objects_with_id_list(Task, request)
+
 
 def change_task_status(request,status,from_owner_or_helper):
 	task_id=request.args[id]

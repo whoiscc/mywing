@@ -4,6 +4,7 @@ from django.test import Client as TestClient, TestCase
 from django.utils import timezone
 from json import dumps
 from angel.models import Angel, LoginItem
+from task.models import Task
 
 
 class Client:
@@ -47,3 +48,21 @@ class TestCaseWithAngel(TestCase):
     def tearDown(self):
         self.angel.delete()
         del self.angel
+
+
+class TestCaseWithTask(TestCaseWithAngel):
+	def setUp(self):
+		super().setUp()
+		task = Task(
+			description='this is a kuaidi',
+			cost=2.0,
+			distribution=1.0,
+			status=0,
+			createdAt='2019-4-1',
+		)
+		task.save()
+		self.task = task
+		
+	def tearDown(self):
+		self.task.delete()
+		del self.task

@@ -1,13 +1,16 @@
 from django.db import models
 
+import uuid
+
+
 class Task(models.Model):
-	description = models.CharField()
-	dstLongitude = models.FloatField(editable=False)
-	dstLatitude = models.FloatField(editable=False)
-	srcLongitude = models.FloatField(editable=False)
-	srcLatitude = models.FloatField(editable=False)
+	description = models.CharField(max_length=128)
+	dstLongitude = models.FloatField(null=True,blank=True,editable=False)
+	dstLatitude = models.FloatField(null=True,blank=True,editable=False)
+	srcLongitude = models.FloatField(null=True,blank=True,editable=False)
+	srcLatitude = models.FloatField(null=True,blank=True,editable=False)
 	cost = models.FloatField()
-	distrbution = models.FloatField()
+	distribution = models.FloatField()
 	status_choices = (
 		(0,"unpick"),	
 		(1,"unfinish"),
@@ -19,17 +22,20 @@ class Task(models.Model):
 	)	
 	status = models.IntegerField(choices=status_choices,default=-4)
 	owner = models.CharField(max_length=16,editable=False)	
-	helper = models.CharField(max_length=16,editable=False)
+	helper = models.CharField(null=True,blank=True,max_length=16,editable=False)
 	createdAt = models.DateTimeField(editable=False)
-	finishedAt = models.DateTimeField(editable=False)
-	canceledAt = models.DateTimeField(editable=False)
+	finishedAt = models.DateTimeField(null=True,blank=True,editable=False)
+	canceledAt = models.DateTimeField(null=True,blank=True,editable=False)
 	
+
 	def to_dict(self):
 		return{
 			'id':self.id,
 			'description':self.description,
 			'cost':self.cost,
-			'distrbution':self.distrbution,
+			'distribution':self.distribution,
 			'status':self.status,
 			'owner':self.owner,
 		}	
+
+

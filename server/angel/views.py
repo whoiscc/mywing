@@ -1,11 +1,10 @@
 #
 
 from django.views.generic import TemplateView
-from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
+from django.utils import timezone
 from common import ok, error, get_objects_with_id_list
 
-import datetime
 import time
 
 from .models import Angel, LoginItem
@@ -22,21 +21,7 @@ class LoginView(TemplateView):
         # TODO: process ticket into central key
         central_key = ticket
 
-        created = False
-        try:
-            angel = Angel.objects.get(central_key=central_key)
-        except Angel.DoesNotExists:
-            created = True
-            angel = Angel(
-                nickname='SuperAwesomeName',
-                central_key=central_key,
-                distribution=0.0,
-            )
-            angel.save()
-
-        item = LoginItem(angel=angel)
-        item.expired_time = timezone.now() + datetime.timedelta(days=30)
-        item.save()
+        angel, item, created = Angel.login_and_optional_create(central_key)
 
         return ok({
             'created': created,
@@ -50,16 +35,10 @@ def debug_login(request):
     ticket = request.args['ticket']
     if ticket == 'debug-ticket-create-angel':
         now = timezone.now()
-        angel = Angel(
-            nickname='SuperAwesomeName',
-            central_key='debug-central-key-' + str(time.mktime(now.timetuple())),
-            distribution=0.0,
-        )
-        angel.save()
+        central_key = 'debug-central-key-' + str(time.mktime(now.timetuple()))
 
-        item = LoginItem(angel=angel)
-        item.expired_time = now + datetime.timedelta(days=30)
-        item.save()
+        angel, item, created = Angel.login_and_optional_create(central_key)
+        assert created
 
         return ok({
             'created': True,

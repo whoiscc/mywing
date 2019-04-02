@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import request from '../../lib/request'
+import request from '../../../lib/request'
 
 export default {
   data() {
@@ -25,6 +25,7 @@ export default {
         this.message = 'Login finished'
         this.error = null
         this.angel = angel
+        this.$emit('login', angel)
         console.log('current angel: ' + angel)
       }).catch(err => {
         this.error = err
@@ -35,6 +36,7 @@ export default {
         this.message = 'Logout finished'
         this.error = null
         this.angel = null
+        this.$emit('login', null)
       }).catch(err => {
         this.error = err
       })

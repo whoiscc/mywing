@@ -51,8 +51,12 @@ $ npm install
 $ npm run build -- --watch
 # 再打开一个终端
 $ cordova platform add browser
-$ cordova run browser --port=8080 -- --live-reload
+$ cordova run browser --port=8080
+# 如果需要测试IM模块，再打开一个终端
+$ cordova run browser --port=8081
 ```
+
+> Cordova的热更新插件暂时由于bug无法使用。每次更新前端代码后需要手动重启Cordova守护进程。
 
 ## 开发规范（适度遵循）
 

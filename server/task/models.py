@@ -10,7 +10,7 @@ class Task(models.Model):
 	srcLongitude = models.FloatField(null=True,blank=True,editable=False)
 	srcLatitude = models.FloatField(null=True,blank=True,editable=False)
 	cost = models.FloatField()
-	distribution = models.FloatField()
+	distribution = models.FloatField(default=0)
 	status_choices = (
 		(0,"unpick"),	
 		(1,"unfinish"),
@@ -36,6 +36,6 @@ class Task(models.Model):
 			'distribution':self.distribution,
 			'status':self.status,
 			'owner':self.owner,
+			'helper':self.helper,
 		}	
-
 

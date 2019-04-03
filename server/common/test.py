@@ -58,7 +58,7 @@ class TestCaseWithTask(TestCaseWithAngel):
 			cost=2.0,
 			distribution=1.0,
 			status=0,
-			createdAt='2019-4-1',
+			createdAt=timezone.now(),
 		)
 		task.save()
 		self.task = task

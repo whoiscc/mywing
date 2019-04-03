@@ -34,6 +34,8 @@ def create(request):
 @require_POST
 def accept(request):
 	task=get_object(Task,request.args['id'])
+	if task.status!=0:
+		return error('task cannot be accepted')
 	task.helper=request.angel.id
 	task.save()
 	task.distribution=request.args['distribution']
@@ -42,12 +44,12 @@ def accept(request):
 
 @require_POST
 def finish(request):
-	_change_task_status(request,2,'helper')
+	return _change_task_status(request,2,'helper')
 
 
 @require_POST
 def confirm(request):
-	_change_task_status(request,3,'owner')	
+	return _change_task_status(request,3,'owner')	
 
 
 @require_POST
@@ -58,47 +60,53 @@ def cancel(request):
 		'unconfirm':-3,
 		}
 	next_status=cancel_status_dict(request.args['id'].get_object.status)
+	print(next_status)
+	print(self.task.to_dict())
 	_change_task_status(request,next_status,'owner')
 
 
 @require_GET
 def get_task_available(request):
-#	print('available:'+request.args['token'])
-#	print(request.args)
-	list_num=int(request.args['maxNum'])
+	list_num=int(request.args['max'])
 	task_list=Task.objects.all()
 	if len(task_list)<list_num:
-		pass
-	return ok([task.to_dict() for task in task_list])
+		return error('exceeded request number')
+	else:
+		return ok([task.to_dict() for task in task_list][:list_num])
 	
 
 @require_GET
 def get_self_task(request):
-	angel_id=get_current_angel_method()
+	angel=self.angel.id
 	involve_task=[]
-	for task_id in extract(request,'id_list'):
-		task=get_object(Task,task_id)
-		if task.owner==angel_id or task.helper==angel_id:
-			if request.args['inProgress']!=false or task.status==0 or task.status==1 or task.status==2:
+	for task in Task.objects.all():
+		if task.owner==angel or task.helper==angel:
+			if request.args['inProgress']==false or task.status==0 or task.status==1 or task.status==2:
 				involve_task.append(task)
+	print(len(involve_task))
 	return ok([task.to_dict() for task in involve_task])
  
 
 @require_GET
 def get_task(request):
-#	print('get:'+request.args['token'])
 	return get_objects_with_id_list(Task, request)
 
 
 def _change_task_status(request,status,from_owner_or_helper):
 	task_id=request.args['id']
 	task=get_object(Task,task_id)
-	print(task.to_dict())
+	if task.status!=status-1:
+		return error('task is not in right status')
+#	print(task.to_dict())
 	angel=request.angel
 	if from_owner_or_helper=='owner':
-		if int(task.owner)!=angel.id:
+		if task.owner=='':
+			return error('owner undesignated')
+		elif int(task.owner)!=angel.id:
 			return error('unmatched task_owner and angel')
 	elif from_owner_or_helper=='helper':
+		if task.helper=='':
+			return error('helper undesignated')
 		if int(task.helper)!=angel.id:
 			return error('unmatched task_helper and angel')
 	else:

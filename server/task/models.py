@@ -22,7 +22,7 @@ class Task(models.Model):
 	)	
 	status = models.IntegerField(choices=status_choices,default=-4)
 	owner = models.CharField(max_length=16,editable=False)	
-	helper = models.CharField(null=True,blank=True,max_length=16,editable=False)
+	helper = models.CharField(default='',blank=True,max_length=16,editable=False)
 	createdAt = models.DateTimeField(editable=False)
 	finishedAt = models.DateTimeField(null=True,blank=True,editable=False)
 	canceledAt = models.DateTimeField(null=True,blank=True,editable=False)

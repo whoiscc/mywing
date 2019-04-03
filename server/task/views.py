@@ -10,9 +10,9 @@ from common import ok,error,extract,get_object,get_objects_with_id_list
 from .models import Task
 from random import sample
 
-o_path = os.getcwd()
-
-sys.path.append(o_path)
+# o_path = os.getcwd()
+#
+# sys.path.append(o_path)
 from angel import views
 
 
@@ -27,7 +27,7 @@ def create(request):
 		status=0,
 		createdAt=request.args['createdAt'],
 	)
-	task.save()	
+	task.save()
 	return ok(task.to_dict())
 
 
@@ -49,20 +49,25 @@ def finish(request):
 
 @require_POST
 def confirm(request):
-	return _change_task_status(request,3,'owner')	
+	return _change_task_status(request,3,'owner')
 
 
 @require_POST
 def cancel(request):
 	cancel_status_dict={
-		'unpick':-1,
-		'unfinish':-2,
-		'unconfirm':-3,
+		0: -1,
+		1: -2,
+		2: -3,
+		# 'unpick':-1,
+		# 'unfinish':-2,
+		# 'unconfirm':-3,
 		}
-	next_status=cancel_status_dict(request.args['id'].get_object.status)
-	print(next_status)
-	print(self.task.to_dict())
+	next_status=cancel_status_dict[Task.objects.get(pk=request.args['id']).status]
+	# print(next_status)
+	# print(self.task.to_dict())
 	_change_task_status(request,next_status,'owner')
+	# return ???
+	return ok()
 
 
 @require_GET
@@ -73,19 +78,19 @@ def get_task_available(request):
 		return error('exceeded request number')
 	else:
 		return ok([task.to_dict() for task in task_list][:list_num])
-	
+
 
 @require_GET
 def get_self_task(request):
-	angel=self.angel.id
+	angel = request.angel.id
 	involve_task=[]
 	for task in Task.objects.all():
 		if task.owner==angel or task.helper==angel:
-			if request.args['inProgress']==false or task.status==0 or task.status==1 or task.status==2:
+			if request.args['inProgress']==false or task.status in [0, 1, 2]:
 				involve_task.append(task)
 	print(len(involve_task))
 	return ok([task.to_dict() for task in involve_task])
- 
+
 
 @require_GET
 def get_task(request):
@@ -117,4 +122,5 @@ def _change_task_status(request,status,from_owner_or_helper):
 		'id':task_id,
 		'token':request.args['token']
 	})
-	return error('unmatched task and angel')	
+	# ???
+	return error('unmatched task and angel')

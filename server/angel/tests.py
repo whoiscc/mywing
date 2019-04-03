@@ -1,4 +1,5 @@
 from common.test import TestCaseWithAngel, Client
+from .models import Angel
 
 
 class TestAngel(TestCaseWithAngel):
@@ -11,4 +12,6 @@ class TestAngel(TestCaseWithAngel):
 
 
     def test_im_token(self):
-        self.assertNotEqual(self.angel.im_token, '')
+        angel = Angel.create('something-central-key')
+        angel.save()
+        self.assertNotEqual(angel.im_token, '')

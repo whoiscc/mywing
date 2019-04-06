@@ -1,11 +1,12 @@
 #
+
 from datetime import timedelta
 from django.test import Client as TestClient, TestCase
 from django.utils import timezone
 from json import dumps
 from angel.models import Angel, LoginItem
 from task.models import Task
-from info.models import Info
+from info.models import Board
 
 
 class Client:
@@ -75,16 +76,12 @@ class TestCaseWithInfo(TestCaseWithAngel):
 		angel.nickname = 'whoiscc'
 		angel.distribution = 26.0
 
-		info = Info(
-					
-		)
-		info.save()
-		info.angel.set(angel)
-		print(info.angel.to_dict())
-		print(info.to_dict())
-		info.save()
-		self.info = info
+		board=Board.objects.create(id=1,updatedAt=timezone.now())
+		
+		board.angel.add(angel)
+		board.save()
+		self.board = board
 
 	def teardown(self):
-		self.info.delete()
-		del self.info
+		self.board.delete()
+		del self.board

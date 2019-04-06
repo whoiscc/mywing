@@ -5,5 +5,5 @@ from . import views
 
 app_name = 'info'
 urlpatterns = [
-	path('board',views.get_board, name='board'),
+	re_path(r'^board/(\d*)$',views.get_board, name='board'),
 ]

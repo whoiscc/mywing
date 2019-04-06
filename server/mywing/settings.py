@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'angel',
     'task',
+	'info',
 ]
 
 MIDDLEWARE = [

@@ -5,6 +5,7 @@ from django.utils import timezone
 from json import dumps
 from angel.models import Angel, LoginItem
 from task.models import Task
+from info.models import Info
 
 
 class Client:
@@ -64,3 +65,26 @@ class TestCaseWithTask(TestCaseWithAngel):
 	def tearDown(self):
 		self.task.delete()
 		del self.task
+
+
+class TestCaseWithInfo(TestCaseWithAngel):
+	def setUp(self):
+		super().setUp()
+
+		angel = Angel.create('xjtu|whoiscc123456')
+		angel.nickname = 'whoiscc'
+		angel.distribution = 26.0
+
+		info = Info(
+					
+		)
+		info.save()
+		info.angel.set(angel)
+		print(info.angel.to_dict())
+		print(info.to_dict())
+		info.save()
+		self.info = info
+
+	def teardown(self):
+		self.info.delete()
+		del self.info

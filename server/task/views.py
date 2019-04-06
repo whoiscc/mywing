@@ -6,7 +6,7 @@ import sys
 import os
 
 from django.views.decorators.http import require_GET, require_POST
-from common import ok,error,extract,get_object,get_objects_with_id_list
+from common import ok,error,get_object,get_objects_with_id_list
 from .models import Task
 from random import sample
 

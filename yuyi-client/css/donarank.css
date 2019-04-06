@@ -1,0 +1,83 @@
+body {
+	background: url(../img/donrkbg.jpg) no-repeat;
+	background-size: cover;
+}
+
+.clicksal {
+	background-color: rgba(50,50,50,0.7);
+    width: 140px;
+	height: 140px;
+    margin-left: 20px;
+	float: left;
+	text-align: right;
+	font-size: 16px;
+	color: lightgray;
+	padding: 5px;
+} 
+
+.clicksar {
+	background-color: rgba(50,50,50,0.7);
+    width: 140px;
+	height: 140px;
+    margin-right: 20px;
+	float: right;
+	text-align: right;
+	font-size: 16px;
+	color: lightgray;
+	padding: 5px;
+}
+
+.ranktt {
+	background-color: rgba(220,220,220,0.8);
+    width: 120px;
+	height: 24px;
+    margin-left: 20px;
+	text-align: center;
+	font-size: 16px;
+	padding: 5px;
+}
+
+.clearfloat{
+	clear:both;
+}
+
+.rankl {
+	background-color: rgba(200,200,200,0.7); 
+	font-size: 16px; 
+	height: 20px;
+	width: 250px;
+	text-align: center; 
+	margin-top: 10px;
+	table-layout: fixed;
+	margin-left: 20px;
+}
+
+.rank {
+	background-color: rgba(200,200,200,0.7); 
+	font-size: 16px; 
+	height: 20px;
+	width: 250px;
+	text-align: center; 
+	margin-top: 10px;
+	table-layout: fixed;
+}
+
+.rankr {
+	background-color: rgba(200,200,200,0.7); 
+	font-size: 16px; 
+	height: 20px;
+	width: 250px;
+	text-align: center; 
+	margin-top: 10px;
+	table-layout: fixed;
+	margin-right: 20px;
+	float:right;
+}
+
+.rankleft {
+	background-color: darkblue;
+	width: 20px;
+	height: 10px;
+	font-size: 16px;
+	color: white;
+}

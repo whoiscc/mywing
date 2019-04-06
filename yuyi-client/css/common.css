@@ -1,0 +1,10 @@
+img.btl {
+	height: 30px; 
+	width: 30px;
+}
+
+img.btr {
+	height: 30px; 
+	width: 30px; 
+	float: right;
+}

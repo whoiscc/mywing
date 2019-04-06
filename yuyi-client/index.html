@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+	function isHidden(oDiv){
+		var vDiv = document.getElementById(oDiv);
+		vDiv.style.display = (vDiv.style.display == 'none')? 'block' : 'none';
+	}
+</script>
+
+<head>
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/common.css">
+	<a href="http://www.baidu.com">
+		<img src="img/iconleft.png" class="btl">
+	</a>
+	<a href="http://www.baidu.com">
+		<img src="img/iconleft.png" class="btr">
+	</a>
+</head>
+
+<body>
+
+<h1>任 务 列 表</h1>
+
+<div onclick="isHidden('opcl1')">
+<table class="task">
+<tr>
+<td class="taskleft">任务<br/>类别</td>
+<td>任务标题 出发地 目的地 <br/>任务简介（点击向下展开）</td>
+</tr>
+</table>
+<p id="opcl1" class="task_deatil">任务简介任务简介任务简介任务简介任务简介任务简介任务简介
+</P>
+</div>
+
+<div onclick="isHidden('opcl2')">
+<table class="task">
+<tr>
+<td class="taskleft">任务<br/>类别</td>
+<td>任务标题 出发地 目的地 <br/>任务简介（点击向下展开）</td>
+</tr>
+</table>
+<p id="opcl2" class="task_deatil">任务简介任务简介任务简介任务简介任务简介任务简介任务简介
+</P>
+</div>
+
+<div onclick="isHidden('opcl3')">
+<table class="task">
+<tr>
+<td class="taskleft">任务<br/>类别</td>
+<td>任务标题 出发地 目的地 <br/>任务简介（点击向下展开）</td>
+</tr>
+</table>
+<p id="opcl3" class="task_deatil">任务简介任务简介任务简介任务简介任务简介任务简介任务简介
+</P>
+</div>
+
+<div onclick="isHidden('opcl4')">
+<table class="task">
+<tr>
+<td class="taskleft">任务<br/>类别</td>
+<td>任务标题 出发地 目的地 <br/>任务简介（点击向下展开）</td>
+</tr>
+</table>
+<p id="opcl4" class="task_deatil">任务简介任务简介任务简介任务简介任务简介任务简介任务简介
+</P>
+</div>
+
+
+</body>
+</html>

@@ -67,23 +67,3 @@ class TestCaseWithTask(TestCaseWithAngel):
 		self.task.delete()
 		del self.task
 
-
-class TestCaseWithInfo(TestCaseWithAngel):
-	def setUp(self):
-		super().setUp()
-
-		angel = Angel.create('xjtu|whoiscc123456')
-		angel.nickname = 'whoiscc'
-		angel.distribution = 26.0
-
-		board=Board.objects.create(id=1,updatedAt=timezone.now())		
-		board.angel.add(angel)
-		board.save()
-
-		news=News.objects.create(id=2)
-		
-		self.board = board
-		self.news = news
-	def teardown(self):
-		self.board.delete()
-		del self.board

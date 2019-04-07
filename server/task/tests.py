@@ -77,6 +77,4 @@ class TestTask(TestCaseWithAngel):
 		self.task.owner=self.angel.id
 		self.task.save()
 		resp = self.client.get('/task/self',args={'inProgress':True})
-		# ??? what is boy
-		# print(resp.boy)
 		self.assertEqual(resp.json()['status'],0)

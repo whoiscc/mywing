@@ -6,7 +6,7 @@ from django.utils import timezone
 from json import dumps
 from angel.models import Angel, LoginItem
 from task.models import Task
-from info.models import Board
+from info.models import Board,News
 
 
 class Client:
@@ -76,12 +76,14 @@ class TestCaseWithInfo(TestCaseWithAngel):
 		angel.nickname = 'whoiscc'
 		angel.distribution = 26.0
 
-		board=Board.objects.create(id=1,updatedAt=timezone.now())
-		
+		board=Board.objects.create(id=1,updatedAt=timezone.now())		
 		board.angel.add(angel)
 		board.save()
-		self.board = board
 
+		news=News.objects.create(id=2)
+		
+		self.board = board
+		self.news = news
 	def teardown(self):
 		self.board.delete()
 		del self.board

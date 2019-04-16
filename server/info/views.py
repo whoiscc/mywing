@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
 from common import ok,error,get_objects_with_id_list
-from .models import Board,Score,News
+from .models import BoardItem, Board, News
 from json import dumps
 
 

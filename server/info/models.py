@@ -9,11 +9,19 @@ from angel.models import Angel
 
 
 class BoardItem(models.Model):
-    board = models.ForeignKey('Board', on_delete=models.CASADE)
+    board = models.ForeignKey('Board', on_delete=models.CASCADE)
     update = models.ForeignKey('UpdateRecord', on_delete=models.PROTECT)
-    angel = models.ForeignKey(Angel, on_delete=models.SET_DEFAULT)
+    angel = models.ForeignKey(Angel, on_delete=models.DO_NOTHING)
     index = models.IntegerField()
     value = models.CharField(max_length=32)
+
+    def to_dict(self):
+        return {
+            'update':self.update.time,
+            'angel':self.angel.nickname,
+            'index':self.index,
+            'value':self.value
+        }
 
 
 class UpdateRecord(models.Model):
@@ -21,8 +29,15 @@ class UpdateRecord(models.Model):
 
 
 class Board(models.Model):
-    name = models.CharField(max_length=32)
-    update = models.ForeignKey(UpdateRecord, on_delete=models.PROTECT)
+    name = models.CharField(max_length=32, default='')
+    update = models.ForeignKey(UpdateRecord, on_delete=models.PROTECT, default='')
+    
+    def to_dict(self):
+        return {
+            'name':self.name,
+            'update':self.update.time,
+            'boarditems':[item.to_dict() for item in self.boarditem_set.all().order_by('index')]
+        }
 
 
 class News(models.Model):

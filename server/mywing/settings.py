@@ -61,7 +61,10 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'file:',
     'localhost:8080',
+<<<<<<< HEAD
     'localhost:8081',
+=======
+>>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 ]
 
 CORS_ALLOW_CREDENTIALS = True

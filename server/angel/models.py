@@ -1,4 +1,5 @@
 from django.db import models
+<<<<<<< HEAD
 from django.utils import timezone
 
 import datetime
@@ -18,19 +19,27 @@ IM_AUTH_HEADER = {
         ).encode()
     ).decode(),
 }
+=======
+
+import uuid
+>>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 
 
 class Angel(models.Model):
     nickname = models.CharField(max_length=16)
     central_key = models.CharField(max_length=64, editable=False, unique=True)
     distribution = models.FloatField()
+<<<<<<< HEAD
     im_token = models.CharField(max_length=64)
+=======
+>>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 
     def to_dict(self):
         return {
             'id': self.id,
             'nickname': self.nickname,
             'distribution': self.distribution,
+<<<<<<< HEAD
             'imToken': self.im_token,
         }
 
@@ -66,6 +75,10 @@ class Angel(models.Model):
         angel.im_token = resp.json()['data']['token']
         angel.save()
         return angel
+=======
+        }
+
+>>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 
 class LoginItem(models.Model):
     angel = models.ForeignKey(Angel, on_delete=models.CASCADE, editable=False)

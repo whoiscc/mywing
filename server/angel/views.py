@@ -1,18 +1,11 @@
 #
 
 from django.views.generic import TemplateView
-<<<<<<< HEAD
-from django.views.decorators.http import require_GET, require_POST
-from django.utils import timezone
-from common import ok, error, get_objects_with_id_list
-
-=======
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 from common import ok, error, get_objects_with_id_list
 
 import datetime
->>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 import time
 
 from .models import Angel, LoginItem
@@ -29,9 +22,6 @@ class LoginView(TemplateView):
         # TODO: process ticket into central key
         central_key = ticket
 
-<<<<<<< HEAD
-        angel, item, created = Angel.login_and_optional_create(central_key)
-=======
         created = False
         try:
             angel = Angel.objects.get(central_key=central_key)
@@ -47,7 +37,6 @@ class LoginView(TemplateView):
         item = LoginItem(angel=angel)
         item.expired_time = timezone.now() + datetime.timedelta(days=30)
         item.save()
->>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 
         return ok({
             'created': created,
@@ -61,12 +50,6 @@ def debug_login(request):
     ticket = request.args['ticket']
     if ticket == 'debug-ticket-create-angel':
         now = timezone.now()
-<<<<<<< HEAD
-        central_key = 'debug-central-key-' + str(time.mktime(now.timetuple()))
-
-        angel, item, created = Angel.login_and_optional_create(central_key)
-        assert created
-=======
         angel = Angel(
             nickname='SuperAwesomeName',
             central_key='debug-central-key-' + str(time.mktime(now.timetuple())),
@@ -77,7 +60,6 @@ def debug_login(request):
         item = LoginItem(angel=angel)
         item.expired_time = now + datetime.timedelta(days=30)
         item.save()
->>>>>>> e73af38a444d573d4f09c4f2f2a0bed14cd671b7
 
         return ok({
             'created': True,

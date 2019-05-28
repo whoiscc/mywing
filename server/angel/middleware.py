@@ -19,11 +19,14 @@ def login_checker_middleware(get_response):
         if request.path in excluded_path_list:
             return get_response(request)
 
-        if 'token' not in request.args:
+        # 从请求头中获取token
+        token = request.META.get('HTTP_X_TOKEN')
+
+        if not token:
             return error('not logged in')
 
         try:
-            item = LoginItem.objects.get(pk=request.args['token'])
+            item = LoginItem.objects.get(pk=token)
         except LoginItem.DoesNotExists:
             return error('invalid token')
 

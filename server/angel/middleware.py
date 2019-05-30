@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from common import error
 from .models import LoginItem
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def login_checker_middleware(get_response):
@@ -27,7 +28,7 @@ def login_checker_middleware(get_response):
 
         try:
             item = LoginItem.objects.get(pk=token)
-        except LoginItem.DoesNotExists:
+        except ObjectDoesNotExist:
             return error('invalid token')
 
         if item.expired_time < timezone.now():

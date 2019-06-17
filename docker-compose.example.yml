@@ -1,0 +1,18 @@
+mywing-server:
+  container_name: mywing-server
+  image: mywing/server:latest
+  restart: always
+  hostname: mywing-server
+###########################
+# Add volumes if you need #
+###########################
+#   volumes:
+#     - /data:/app/data
+  ports:
+    - 127.0.0.1:8080:80
+  environment:
+    - APP_DEBUG=false
+    - DB_HOSTNAME=127.0.0.1
+    - DB_DBNAME=mywing-server
+    - DB_USERNAME=mywing-server
+    - DB_PASSWORD=secret

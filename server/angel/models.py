@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.utils import timezone
 
 import datetime
@@ -31,6 +32,7 @@ class Angel(models.Model):
             'id': self.id,
             'nickname': self.nickname,
             'distribution': self.distribution,
+
             'imToken': self.im_token,
         }
 

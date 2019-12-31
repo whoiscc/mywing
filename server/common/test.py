@@ -29,7 +29,10 @@ class Client:
 class TestCaseWithAngel(TestCase):
     def setUp(self):
         super().setUp()
-        angel = Angel.create('xjtu|cowsay123456')
+        # angel = Angel.create('xjtu|cowsay123456')
+        # bypass fetching IM Token
+        angel = Angel()
+        angel.central_key= 'xjtu|cowsay123456'
         angel.nickname = 'Cowsay'
         angel.distribution = 16.0
         angel.save()

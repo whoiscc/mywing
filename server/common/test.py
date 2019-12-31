@@ -29,9 +29,11 @@ class Client:
 class TestCaseWithAngel(TestCase):
     def setUp(self):
         super().setUp()
-        angel = Angel.create('xjtu|cowsay123456')
-        angel.nickname = 'Cowsay'
-        angel.distribution = 16.0
+        angel = Angel(
+            nickname='Cowsay',
+            central_key='xjtu|cowsay123456',
+            distribution=16.0
+        )
         angel.save()
         self.angel = angel
         login_item = LoginItem(

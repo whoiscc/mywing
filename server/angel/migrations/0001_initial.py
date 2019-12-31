@@ -19,6 +19,7 @@ class Migration(migrations.Migration):
                 ('nickname', models.CharField(max_length=16)),
                 ('central_key', models.CharField(max_length=64)),
                 ('distribution', models.FloatField()),
+                ('im_token', models.CharField(max_length=64)),
             ],
         ),
         migrations.CreateModel(

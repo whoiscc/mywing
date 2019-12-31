@@ -1,0 +1,33 @@
+body {
+	background-image:url(../img/indexbg.jpg);
+}
+
+h1 {
+	text-align: center;
+}
+
+table,tr,td.task {
+	background-color: rgba(200,200,200,0.7); 
+	font-size: 14px; 
+	padding: 0px; 
+	width: 90%; 
+	text-align: left; 
+	margin: auto; 
+	margin-top: 16px;
+}
+
+td.taskleft {
+	background-color: lightgray;
+	padding: 10px; 
+	text-align: center;
+}
+
+.task_deatil {
+	background-color: rgba(200,200,200,0.7); 
+	font-size: 14px; 
+	padding: 0px; 
+	width: 90%; 
+	text-align: left; 
+	margin: auto; 
+	display: none;
+}

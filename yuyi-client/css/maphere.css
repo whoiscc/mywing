@@ -1,0 +1,38 @@
+body {
+	background: url(../img/mapherebg.jpg) no-repeat;
+	background-size: cover;
+}
+
+p {
+	display: inline;
+}
+
+.bigf {
+	font-size: 1.25rem;
+	margin-left: 4rem;
+	margin-right: 1.25rem;
+}
+
+.smallf {
+	font-size: 1rem;
+	color: darkgray;
+}
+
+.head_pic{
+    width: 100px;
+    height: 100px;
+	margin-top: 20px;
+}
+
+.button1 {
+	width: 6.25rem;
+	font-size: 1.25rem;
+	padding: 0.625rem;
+	margin-top: 1.25rem;
+	background-color: gray;
+	border:1px solid red;
+	border-radius: 8px;   
+	-moz-border-radius: 8px;   
+	-webkit-border-radius: 8px;
+	color:white;
+}

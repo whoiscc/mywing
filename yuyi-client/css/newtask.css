@@ -1,0 +1,48 @@
+body {
+	background: url(../img/newtaskbg.jpg);
+}
+
+.square1 {
+	width: 80%;
+	height: 460px;
+	font-size: 20px;
+	text-align: left;
+	padding: 20px;
+	margin-top: 10px;
+	background-color: rgb(220,220,220,0.8);
+	border-radius: 8px;   
+	-moz-border-radius: 8px;   
+	-webkit-border-radius: 8px;
+	color:black;
+}
+
+.input1 {
+	background-color: rgb(220,220,220,0.8);
+	color:dimgray;
+	font-size: 20px;
+	margin-right: 2px;
+	width: 190px;
+}
+
+.button1 {
+	width: 140px;
+	font-size: 1.25rem;
+	padding: 0.625rem;
+	box-shadow: 2px 0 2px dimgray;
+	margin-top: 1.25rem;
+	background-color: goldenrod;
+	border:1px solid goldenrod;
+	border-radius: 8px;   
+	-moz-border-radius: 8px;   
+	-webkit-border-radius: 8px;
+	color:white;
+}
+
+.head_pic{
+    width: 100px;
+    height: 100px;
+	margin-top: 40px;
+	border-radius: 70%;
+	position:absolute;
+	margin-left:40px;
+}
